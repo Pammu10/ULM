@@ -15,7 +15,9 @@ export const sendEmail = async ({ email, subject, message}: {email: string, subj
       email: email,
       subject: subject,
       message: message,
-      }, config.env.emailJS.publicKey);
+      }, {
+        publicKey: 'YOUR_PUBLIC_KEY',
+      });
     }
     catch(error){
       console.error(error, "Email error");
