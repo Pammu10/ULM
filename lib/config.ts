@@ -14,7 +14,10 @@ const config = {
             qstashUrl: process.env.QSTASH_URL!,
             qstashToken: process.env.QSTASH_TOKEN!,
         },
-        resendToken: process.env.RESEND_TOKEN!,
+        emailJS: {
+            privateKey: process.env.EMAILJS_PRIVATE_KEY!, 
+            publicKey: process.env.EMAILJS_PUBLIC_KEY!,
+        }
         
     }
 }
