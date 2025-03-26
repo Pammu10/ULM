@@ -15,8 +15,9 @@ const config = {
             qstashToken: process.env.QSTASH_TOKEN!,
         },
         emailJS: {
-            privateKey: process.env.EMAILJS_PRIVATE_KEY!, 
-            publicKey: process.env.EMAILJS_PUBLIC_KEY!,
+            user: process.env.EMAILJS_USER!,
+            password: process.env.EMAILJS_PASSWORD!,
+            fromEmail: process.env.EMAILJS_FROM_EMAIL!,
         }
         
     }
