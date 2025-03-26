@@ -11,7 +11,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     providers: [
     CredentialsProvider({
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null
         }
@@ -43,10 +43,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
         return token;
       },
-      async sessions({session, token}){
+      async session({session, token}){
         if (session.user){
-          session.user.id = token.id;
-          session.user.name = token.name;
+          session.user.id = token.id as string;
+          session.user.name = token.name as string;
         }
         return session
       }
