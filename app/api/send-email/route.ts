@@ -11,10 +11,9 @@ export async function POST(request: Request) {
             template_id: config.env.emailJS.templateId,
             user_id: config.env.emailJS.publicKey,
             template_params: {
-                from,
-                to,
-                subject,
-                text,
+                email: to,
+                subject: subject,
+                message: text,
             }
         };
         console.log(JSON.stringify(data));
