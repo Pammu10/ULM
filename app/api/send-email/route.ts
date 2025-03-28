@@ -1,28 +1,35 @@
-import { SMTPClient } from '@emailjs/nodejs';
-import config from "@/lib/config";
+import config from '@/lib/config';
+
 import { NextResponse } from 'next/server';
 
-const emailClient = new SMTPClient({
-    user: config.env.emailJS.user,
-    password: config.env.emailJS.password,
-    host: 'smtp.gmail.com',
-    ssl: true,
-});
 
 export async function POST(request: Request) {
     try {
         const { to, subject, text, from } = await request.json();
-        
-        await emailClient.send({
-            from,
-            to,
-            subject,
-            text,
+        const data = {
+            service_id: config.env.emailJS.serviceId,
+            template_id: config.env.emailJS.templateId,
+            user_id: config.env.emailJS.publicKey,
+            template_params: {
+                from,
+                to,
+                subject,
+                text,
+            }
+        };
+        console.log(JSON.stringify(data));
+        const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
         });
-
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        console.error("Failed to send email:", error);
-        return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+        if (!response.ok) {
+            throw new Error(`Failed to send email: ${response.status} ${response.statusText}`);
+        }
+        return  NextResponse.json({ success: true, message: 'Email sent successfully' }, { status: 200 });
+    } catch (error: any) {
+        return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
     }
 }
