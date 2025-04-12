@@ -5,9 +5,10 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Button } from './ui/button'
 
-const BookCard = ({id, title, author, genre, rating, description, coverColor, coverUrl, videoUrl, summary, isLoanedBook=false} : Book) => {
+
+const BookCard = ({id, title, author, genre, rating, description, coverColor, coverUrl, videoUrl, summary, isLoanedBook} : Props) => {
   return ( <li className={cn(isLoanedBook && "xs:w-52 w-full")}>
-        <Link href={'/books/${id}'} className={cn(isLoanedBook && "w-full flex flex-col items-center")}>
+        <Link href={`/books/${id}`} className={cn(isLoanedBook && "w-full flex flex-col items-center")}>
         <BookCover coverColor={coverColor} coverImage={coverUrl}/>
         <div className={cn("mt-4", !isLoanedBook && "xs:max-w-40 max-w-28")}>
             <p className='book-title'>{title}</p>
